@@ -21,8 +21,13 @@ jobs:
           username: ${{ secrets.GCP_SSH_USER }}
           key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
           script: |
-            # เปลี่ยน path ไปยังโปรเจกต์ของคุณบน GCP Server
-            cd /path/to/your/infinity-work
+            # ตรวจสอบว่ามีโฟลเดอร์โปรเจกต์หรือยัง ถ้ายังไม่มีให้ clone ใหม่
+            if [ ! -d "infinity-work" ]; then
+              echo "📦 Cloning repository for the first time..."
+              git clone https://github.com/natchdec/infinity-work.git
+            fi
+            
+            cd infinity-work
             
             echo "📥 Pulling latest code from GitHub..."
             git pull origin main
