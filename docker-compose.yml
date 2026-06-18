@@ -22,7 +22,7 @@ services:
       - "3000:3000"
     environment:
       - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-secret}@work-os-db:5432/${DB_NAME:-work_os}?schema=public
-      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://34.68.199.234:3000}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://34.68.199.234.nip.io:3000}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-super-secret-key}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
