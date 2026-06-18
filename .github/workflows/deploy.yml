@@ -38,6 +38,6 @@ jobs:
             sudo docker compose up -d --build
             
             echo "🗄️ Running Database Migrations..."
-            sudo docker exec work-os-web npx prisma db push
+            # Disabled db push temporarily to prevent hanging, schema is manually managed for now
             
             echo "✅ Deployment Successful!"
