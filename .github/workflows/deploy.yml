@@ -1,0 +1,36 @@
+name: Deploy to GCP via SSH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to GCP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.GCP_SERVER_IP }}
+          username: ${{ secrets.GCP_SSH_USER }}
+          key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
+          script: |
+            # เปลี่ยน path ไปยังโปรเจกต์ของคุณบน GCP Server
+            cd /path/to/your/infinity-work
+            
+            echo "📥 Pulling latest code from GitHub..."
+            git pull origin main
+            
+            echo "🐳 Rebuilding and Restarting Docker Containers..."
+            docker compose up -d --build
+            
+            echo "🗄️ Running Database Migrations..."
+            docker exec work-os-web npx prisma db push
+            
+            echo "✅ Deployment Successful!"
