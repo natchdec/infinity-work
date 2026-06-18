@@ -20,7 +20,7 @@ jobs:
           host: ${{ secrets.GCP_SERVER_IP }}
           username: ${{ secrets.GCP_SSH_USER }}
           key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
-          timeout: 30m
+          command_timeout: 30m
           script_stop: true
           script: |
             # ตรวจสอบว่ามีโฟลเดอร์โปรเจกต์หรือยัง ถ้ายังไม่มีให้ clone ใหม่
