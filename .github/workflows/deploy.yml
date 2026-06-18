@@ -20,6 +20,7 @@ jobs:
           host: ${{ secrets.GCP_SERVER_IP }}
           username: ${{ secrets.GCP_SSH_USER }}
           key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
+          script_stop: true
           script: |
             # ตรวจสอบว่ามีโฟลเดอร์โปรเจกต์หรือยัง ถ้ายังไม่มีให้ clone ใหม่
             if [ ! -d "infinity-work" ]; then
@@ -33,9 +34,9 @@ jobs:
             git pull origin main
             
             echo "🐳 Rebuilding and Restarting Docker Containers..."
-            docker compose up -d --build
+            sudo docker compose up -d --build
             
             echo "🗄️ Running Database Migrations..."
-            docker exec work-os-web npx prisma db push
+            sudo docker exec work-os-web npx prisma db push
             
             echo "✅ Deployment Successful!"
