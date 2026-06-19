@@ -11,7 +11,11 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        tint: "rgb(var(--tint) / <alpha-value>)",
       },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      }
     },
   },
   plugins: [],
