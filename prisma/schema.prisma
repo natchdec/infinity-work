@@ -46,6 +46,7 @@ model User {
   checkIns      CheckIn[]
   tasks         Task[]    @relation("AssignedTasks")
   reports       WeeklyReport[]
+  leaveRequests LeaveRequest[]
 }
 
 enum Role {
@@ -62,6 +63,8 @@ model CheckIn {
   checkInTime  DateTime?
   checkOutTime DateTime?
   status       String    @default("ON_TIME")
+  mood         String?
+  dailyPlan    String?   @db.Text
   user         User      @relation(fields: [userId], references: [id])
 }
 
@@ -82,4 +85,18 @@ model WeeklyReport {
   weekStart   DateTime @db.Date
   user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
+}
+
+model LeaveRequest {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String   // "SICK", "VACATION", "PERSONAL"
+  startDate   DateTime @db.Date
+  endDate     DateTime @db.Date
+  reason      String   @db.Text
+  status      String   @default("PENDING") // "PENDING", "APPROVED", "REJECTED"
+  approverId  String?
+  createdAt   DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id])
 }
